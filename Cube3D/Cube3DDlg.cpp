@@ -10,6 +10,8 @@
 #endif
 
 
+#define OPENGL_RENDER_TIMER    (1)
+
 // CCube3DDlg
 
 
@@ -30,6 +32,8 @@ BEGIN_MESSAGE_MAP(CCube3DDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_WM_DESTROY()
 	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_BUTTON_NEW, &CCube3DDlg::OnClickedButtonNew)
+	ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
 
@@ -44,6 +48,7 @@ BOOL CCube3DDlg::OnInitDialog()
 
 	// TODO:
 	InitOpenGL();
+	InitTimer();
 
 	return TRUE;
 }
@@ -67,10 +72,6 @@ void CCube3DDlg::OnPaint()
 	}
 	else
 	{
-        /* OpenGL render */
-        opengl.renderScene();
-        SetTimer(1, 12, NULL);
-
 		CDialog::OnPaint();
 	}
 }
@@ -78,6 +79,11 @@ void CCube3DDlg::OnPaint()
 HCURSOR CCube3DDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+void CCube3DDlg::InitTimer()
+{
+    SetTimer(OPENGL_RENDER_TIMER, 12, NULL);
 }
 
 BOOL CCube3DDlg::InitOpenGL()
@@ -92,15 +98,32 @@ BOOL CCube3DDlg::InitOpenGL()
     GLsizei width = rect.right - rect.left;
     GLsizei height = rect.bottom - rect.top;
 
-	opengl.init(width, height);
+    opengl.init(width, height);
 
-	return TRUE;
+    return TRUE;
 }
 
 void CCube3DDlg::OnTimer(UINT_PTR nIDEvent)
 {
-	// TODO:
-	opengl.renderScene();
+    opengl.renderScene();
 
-	CDialog::OnTimer(nIDEvent);
+    CDialog::OnTimer(nIDEvent);
+}
+
+void CCube3DDlg::OnClickedButtonNew()
+{
+    KillTimer(OPENGL_RENDER_TIMER);
+    GetDlgItem(IDC_BUTTON_SHUFFLE)->EnableWindow(TRUE);
+    GetDlgItem(IDC_BUTTON_RESTORE)->EnableWindow(TRUE);
+    GetDlgItem(IDC_BUTTON_SOLVE)->EnableWindow(TRUE);
+    GetDlgItem(IDC_BUTTON_ACTION)->EnableWindow(TRUE);
+
+    opengl.resetScene();
+}
+
+BOOL CCube3DDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+    opengl.zoomScene(zDelta);
+
+    return CDialog::OnMouseWheel(nFlags, zDelta, pt);
 }

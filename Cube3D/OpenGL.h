@@ -13,6 +13,7 @@ private:
     float angleX;
     float angleY;
     float angleZ;
+    float zoomSize;
 
 public:
     COpenGL();
@@ -20,7 +21,10 @@ public:
 
     void init(int width, int height);
     bool setupPixelFormat(CDC *dc);
-    void renderScene();
+
+    void renderScene(bool rotate = true);
+    void resetScene();
+    void zoomScene(short delta);
 };
 
 #endif /* _OPENGL_H_ */

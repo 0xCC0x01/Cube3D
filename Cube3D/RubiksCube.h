@@ -16,6 +16,7 @@ public:
     ~RubiksCube();
 
     void display();
+    void rotateU(bool clockwise);
 };
 
 #endif /* _RUBIKS_CUBE_H_ */

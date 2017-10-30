@@ -13,6 +13,7 @@ public:
     Color();
 };
 
+
 class Cube
 {
 private:
@@ -24,6 +25,11 @@ private:
     Color color[6];
 
 public:
+    float dir;
+    float rotX;
+    float rotY;
+    float rotZ;
+
     Cube(float _size, bool _solid = true);
 
     /* set color for one single face */

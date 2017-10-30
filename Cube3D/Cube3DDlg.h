@@ -29,6 +29,9 @@ private:
 	COpenGL opengl;
 
 public:
+	void InitTimer();
 	BOOL InitOpenGL();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnClickedButtonNew();
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 };

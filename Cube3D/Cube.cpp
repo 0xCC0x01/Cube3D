@@ -3,15 +3,19 @@
 
 Color::Color()
 {
-    r = 0.0f;
-    g = 0.0f;
-    b = 0.0f;
+    r = 1.0f;
+    g = 1.0f;
+    b = 1.0f;
 }
 
 Cube::Cube(float _size, bool _solid)
 {
     size = _size;
     solid = _solid;
+
+    rotX = 0.0f;
+    rotY = 0.0f;
+    rotZ = 0.0f;
 }
 
 void Cube::setColor(int face, Color c)
