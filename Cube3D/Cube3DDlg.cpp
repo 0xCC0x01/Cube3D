@@ -123,7 +123,15 @@ void CCube3DDlg::OnClickedButtonNew()
 
 BOOL CCube3DDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
-    opengl.zoomScene(zDelta);
+    CRect rect;
+    GetDlgItem(IDC_DRAW)->GetClientRect(&rect);
+    ClientToScreen(&rect);
+
+    if ((pt.x >= rect.left && pt.x <= rect.right)
+        && (pt.y >= rect.top && pt.y <= rect.bottom))
+    {
+        opengl.zoomScene(zDelta);
+    }
 
     return CDialog::OnMouseWheel(nFlags, zDelta, pt);
 }
