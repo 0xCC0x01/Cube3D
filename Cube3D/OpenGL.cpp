@@ -76,6 +76,8 @@ bool COpenGL::setupPixelFormat(CDC *dc)
     {
         return false;
     }
+    hRC = wglCreateContext(hDC->GetSafeHdc());
+    wglMakeCurrent(hDC->GetSafeHdc(), hRC);
 
     return true;
 }

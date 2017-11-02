@@ -96,8 +96,6 @@ BOOL CCube3DDlg::InitOpenGL()
 {
     CDC *dc = new CClientDC(GetDlgItem(IDC_DRAW));
     opengl.setupPixelFormat(dc);
-    HGLRC rc = wglCreateContext(dc->GetSafeHdc());
-    wglMakeCurrent(dc->GetSafeHdc(), rc);
 
     CRect rect;
     GetDlgItem(IDC_DRAW)->GetClientRect(rect);
