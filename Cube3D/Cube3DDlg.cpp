@@ -32,8 +32,12 @@ BEGIN_MESSAGE_MAP(CCube3DDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_WM_DESTROY()
 	ON_WM_TIMER()
-	ON_BN_CLICKED(IDC_BUTTON_NEW, &CCube3DDlg::OnClickedButtonNew)
 	ON_WM_MOUSEWHEEL()
+	ON_BN_CLICKED(IDC_BUTTON_NEW, &CCube3DDlg::OnClickedButtonNew)
+    ON_BN_CLICKED(IDC_BUTTON_SHUFFLE, &CCube3DDlg::OnClickedButtonShuffle)
+    ON_WM_RBUTTONDOWN()
+    ON_WM_RBUTTONUP()
+    ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 
@@ -46,7 +50,9 @@ BOOL CCube3DDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);
 	SetIcon(m_hIcon, FALSE);
 
-	// TODO:
+	// init
+	sceneRotate = true;
+	rButtonDown = false;
 	InitOpenGL();
 	InitTimer();
 
@@ -105,14 +111,27 @@ BOOL CCube3DDlg::InitOpenGL()
 
 void CCube3DDlg::OnTimer(UINT_PTR nIDEvent)
 {
-    opengl.renderScene();
+    opengl.render(sceneRotate);
 
     CDialog::OnTimer(nIDEvent);
 }
 
+BOOL CCube3DDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	CRect rect;
+    GetDlgItem(IDC_DRAW)->GetWindowRect(rect);
+
+	if (rect.PtInRect(pt))
+    {
+        opengl.zoomScene(zDelta);
+    }
+
+    return CDialog::OnMouseWheel(nFlags, zDelta, pt);
+}
+
 void CCube3DDlg::OnClickedButtonNew()
 {
-    KillTimer(OPENGL_RENDER_TIMER);
+    sceneRotate = false;
     GetDlgItem(IDC_BUTTON_SHUFFLE)->EnableWindow(TRUE);
     GetDlgItem(IDC_BUTTON_RESTORE)->EnableWindow(TRUE);
     GetDlgItem(IDC_BUTTON_SOLVE)->EnableWindow(TRUE);
@@ -121,17 +140,53 @@ void CCube3DDlg::OnClickedButtonNew()
     opengl.resetScene();
 }
 
-BOOL CCube3DDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+void CCube3DDlg::OnClickedButtonShuffle()
 {
-    CRect rect;
-    GetDlgItem(IDC_DRAW)->GetClientRect(&rect);
-    ClientToScreen(&rect);
+    opengl.shuffleScene();
+}
 
-    if ((pt.x >= rect.left && pt.x <= rect.right)
-        && (pt.y >= rect.top && pt.y <= rect.bottom))
+void CCube3DDlg::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	CRect rect;
+	POINT pt = point;
+	GetDlgItem(IDC_DRAW)->GetWindowRect(rect);
+	ClientToScreen(&pt);
+
+	if (rect.PtInRect(pt))
     {
-        opengl.zoomScene(zDelta);
-    }
+		rButtonDown = true;
+		rButtonPos = point;
+	}
+	
+    CDialog::OnRButtonDown(nFlags, point);
+}
 
-    return CDialog::OnMouseWheel(nFlags, zDelta, pt);
+void CCube3DDlg::OnRButtonUp(UINT nFlags, CPoint point)
+{
+	if (rButtonDown)
+	{
+		rButtonDown = false;
+	}
+
+    CDialog::OnRButtonUp(nFlags, point);
+}
+
+void CCube3DDlg::OnMouseMove(UINT nFlags, CPoint point)
+{
+	CRect rect;
+	POINT pt = point;
+	GetDlgItem(IDC_DRAW)->GetWindowRect(rect);
+	ClientToScreen(&pt);
+
+	if (rect.PtInRect(pt) && rButtonDown)
+	{
+		opengl.setRot(point.x - rButtonPos.x, point.y - rButtonPos.y);
+		rButtonPos = point;
+	}
+	else
+	{
+		rButtonDown = false;
+	}
+
+    CDialog::OnMouseMove(nFlags, point);
 }

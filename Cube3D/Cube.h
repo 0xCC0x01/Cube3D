@@ -10,7 +10,8 @@ public:
     float b;
 
 public:
-    Color();
+    Color() { r = 0.5f; g = 0.5f; b = 0.5f; };
+    Color(float _r, float _g, float _b);
 };
 
 
@@ -23,13 +24,14 @@ private:
     float size;
     /* colors of 6 faces */
     Color color[6];
-
-public:
+    /* rotate direction */
     float dir;
+    /* rotate angle */
     float rotX;
     float rotY;
     float rotZ;
 
+public:
     Cube(float _size, bool _solid = true);
 
     /* set color for one single face */
@@ -37,10 +39,20 @@ public:
 
     /* set the same color for all 6 faces */
     void setColor(Color c);
+    
+    /* set rotate direction */
+    void setDir(bool clockwise);
+    
+    /* set rotate angle */
+    void setRotX(float angle);
+    void setRotY(float angle);
+    void setRotZ(float angle);
 
     /* display the cube */
     void display();
-};
 
+    /* rotate or derotate the cube */
+    void rotate(bool derotate);
+};
 
 #endif /* _CUBE_H_ */

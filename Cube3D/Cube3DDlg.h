@@ -26,12 +26,19 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-	COpenGL opengl;
+	bool sceneRotate;
+	bool rButtonDown;
+	CPoint rButtonPos;
+    COpenGL opengl;
 
 public:
-	void InitTimer();
-	BOOL InitOpenGL();
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	afx_msg void OnClickedButtonNew();
-	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+    void InitTimer();
+    BOOL InitOpenGL();
+    afx_msg void OnTimer(UINT_PTR nIDEvent);
+    afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+    afx_msg void OnClickedButtonNew();
+    afx_msg void OnClickedButtonShuffle();
+    afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+    afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
+    afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };
