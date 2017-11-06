@@ -27,8 +27,8 @@ COpenGL::~COpenGL()
 
 void COpenGL::setRot(int deltaX, int deltaY)
 {
-    angleY += (deltaX > 0 ? ROTATE_DELTA : -ROTATE_DELTA);
-    angleX += (deltaY > 0 ? ROTATE_DELTA : -ROTATE_DELTA);
+    angleY += 2*(deltaX > 0 ? ROTATE_DELTA : -ROTATE_DELTA);
+    angleX += 2*(deltaY > 0 ? ROTATE_DELTA : -ROTATE_DELTA);
 }
 
 void COpenGL::init(int width, int height)
@@ -82,7 +82,7 @@ bool COpenGL::setupPixelFormat(CDC *dc)
     return true;
 }
 
-void COpenGL::render(bool rotate)
+void COpenGL::render(bool selfRotate)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -96,16 +96,16 @@ void COpenGL::render(bool rotate)
     if (!actions.empty())
     {
         ACTION currAct = actions[0];
-        if (rubik.rotate(currAct.face, currAct.dir))
+        if (rubik.rotateFace(currAct.face, currAct.dir))
         {
             actions.erase(actions.begin());
         }
     }
     
-    rubik.display();
+    rubik.display(selfRotate);
     SwapBuffers(hDC->GetSafeHdc());
 
-    if (rotate)
+    if (selfRotate)
     {
         angleX += ROTATE_DELTA;
         angleY += ROTATE_DELTA;
@@ -128,7 +128,7 @@ void COpenGL::zoomScene(short delta)
 void COpenGL::resetScene()
 {
     angleX = 20.0f;
-    angleY = 60.0f;
+    angleY = -30.0f;
     angleZ = 0.0f;
 
     rubik.init();

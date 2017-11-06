@@ -26,7 +26,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-	bool sceneRotate;
+	bool selfRotate;
 	bool rButtonDown;
 	CPoint rButtonPos;
     COpenGL opengl;

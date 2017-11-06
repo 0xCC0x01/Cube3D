@@ -1,13 +1,6 @@
 #include "stdafx.h"
 #include "Cube.h"
 
-Color::Color(float _r, float _g, float _b)
-{
-    r = _r;
-    g = _g;
-    b = _b;
-}
-
 Cube::Cube(float _size, bool _solid)
 {
     size = _size;
@@ -27,14 +20,6 @@ void Cube::setColor(int face, Color c)
         color[face].r = c.r;
         color[face].g = c.g;
         color[face].b = c.b;
-    }
-}
-
-void Cube::setColor(Color c)
-{
-    for (int i = 0; i < 6; i++)
-    {
-        setColor(i, c);
     }
 }
 
@@ -58,7 +43,7 @@ void Cube::setRotZ(float angle)
     rotZ = angle;
 }
 
-void Cube::display()
+void Cube::display(bool selfRotate)
 {
     GLenum mode = solid ? GL_FILL : GL_LINE;
     glPolygonMode(GL_FRONT_AND_BACK, mode);
@@ -66,42 +51,60 @@ void Cube::display()
     glBegin(GL_QUADS);
 
     //Front
-    glColor3f(color[0].r, color[0].g, color[0].b);
+    if (!selfRotate)
+    {
+        glColor3f(color[0].r, color[0].g, color[0].b);
+    }
     glVertex3f(0, 0, size);
     glVertex3f(size, 0, size);
     glVertex3f(size, size, size);
     glVertex3f(0, size, size);
 
     //Back
-    glColor3f(color[1].r, color[1].g, color[1].b);
+    if (!selfRotate)
+    {
+        glColor3f(color[1].r, color[1].g, color[1].b);
+    }
     glVertex3f(0, 0, 0);
     glVertex3f(size, 0, 0);
     glVertex3f(size, size, 0);
     glVertex3f(0, size, 0);
 
     //Up
-    glColor3f(color[2].r, color[2].g, color[2].b);
+    if (!selfRotate)
+    {
+        glColor3f(color[2].r, color[2].g, color[2].b);
+    }
     glVertex3f(0, size, 0);
     glVertex3f(size, size, 0);
     glVertex3f(size, size, size);
     glVertex3f(0, size, size);
 
     //Down
-    glColor3f(color[3].r, color[3].g, color[3].b);
+    if (!selfRotate)
+    {
+        glColor3f(color[3].r, color[3].g, color[3].b);
+    }
     glVertex3f(0, 0, 0);
     glVertex3f(size, 0, 0);
     glVertex3f(size, 0, size);
     glVertex3f(0, 0, size);
 
     //Left
-    glColor3f(color[4].r, color[4].g, color[4].b);
+    if (!selfRotate)
+    {
+        glColor3f(color[4].r, color[4].g, color[4].b);
+    }
     glVertex3f(0, 0, 0);
     glVertex3f(0, size, 0);
     glVertex3f(0, size, size);
     glVertex3f(0, 0, size);
 
     //Right
-    glColor3f(color[5].r, color[5].g, color[5].b);
+    if (!selfRotate)
+    {
+        glColor3f(color[5].r, color[5].g, color[5].b);
+    }
     glVertex3f(size, 0, 0);
     glVertex3f(size, size, 0);
     glVertex3f(size, size, size);

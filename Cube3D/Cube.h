@@ -1,7 +1,6 @@
 #ifndef _CUBE_H_
 #define _CUBE_H_
 
-
 class Color
 {
 public:
@@ -11,9 +10,8 @@ public:
 
 public:
     Color() { r = 0.5f; g = 0.5f; b = 0.5f; };
-    Color(float _r, float _g, float _b);
+    Color(unsigned char _r, unsigned char _g, unsigned char _b) { r = _r/255.0f; g = _g/255.0f; b = _b/255.0f; };
 };
-
 
 class Cube
 {
@@ -36,9 +34,6 @@ public:
 
     /* set color for one single face */
     void setColor(int face, Color c);
-
-    /* set the same color for all 6 faces */
-    void setColor(Color c);
     
     /* set rotate direction */
     void setDir(bool clockwise);
@@ -49,7 +44,7 @@ public:
     void setRotZ(float angle);
 
     /* display the cube */
-    void display();
+    void display(bool selfRotate);
 
     /* rotate or derotate the cube */
     void rotate(bool derotate);

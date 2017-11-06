@@ -51,7 +51,7 @@ BOOL CCube3DDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);
 
 	// init
-	sceneRotate = true;
+	selfRotate = true;
 	rButtonDown = false;
 	InitOpenGL();
 	InitTimer();
@@ -109,7 +109,7 @@ BOOL CCube3DDlg::InitOpenGL()
 
 void CCube3DDlg::OnTimer(UINT_PTR nIDEvent)
 {
-    opengl.render(sceneRotate);
+    opengl.render(selfRotate);
 
     CDialog::OnTimer(nIDEvent);
 }
@@ -129,7 +129,7 @@ BOOL CCube3DDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 
 void CCube3DDlg::OnClickedButtonNew()
 {
-    sceneRotate = false;
+    selfRotate = false;
     GetDlgItem(IDC_BUTTON_SHUFFLE)->EnableWindow(TRUE);
     GetDlgItem(IDC_BUTTON_RESTORE)->EnableWindow(TRUE);
     GetDlgItem(IDC_BUTTON_SOLVE)->EnableWindow(TRUE);

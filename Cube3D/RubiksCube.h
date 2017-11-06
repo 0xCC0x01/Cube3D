@@ -28,8 +28,11 @@ public:
 
     void init();
 
-    void display();
-    bool rotate(int face, bool clockwise);
+    void setColor();
+
+    void display(bool selfRotate);
+    bool rotateFace(int face, bool clockwise);
+    void rotateColor(int face, bool clockwise);
 };
 
 #endif /* _RUBIKS_CUBE_H_ */
