@@ -74,43 +74,7 @@ void RubiksCube::init()
         }
     }
 
-    for (int i = 0; i < LAYERS; i++)
-    {
-        for (int j = 0; j < LAYERS; j++)
-        {
-            for (int k = 0; k < LAYERS; k++)
-            {
-                cube[i][j][k]->setRotX(0.0f);
-                cube[i][j][k]->setRotY(0.0f);
-                cube[i][j][k]->setRotZ(0.0f);
-
-                if (k == LAYERS - 1)
-                {
-                    cube[i][j][k]->setColor(FRONT, green);
-                }
-                if (k == 0)
-                {
-                    cube[i][j][k]->setColor(BACK, blue);
-                }
-                if (j == LAYERS - 1)
-                {
-                    cube[i][j][k]->setColor(UP, white);
-                }
-                if (j == 0)
-                {
-                    cube[i][j][k]->setColor(DOWN, yellow);
-                }
-                if (i == 0)
-                {
-                    cube[i][j][k]->setColor(LEFT, red);
-                }
-                if (i == LAYERS - 1)
-                {
-                    cube[i][j][k]->setColor(RIGHT, orange);
-                }
-            }
-        }
-    }
+    setColor();
 }
 
 void RubiksCube::setColor()
