@@ -10,25 +10,8 @@ static Color orange = Color(250, 150, 50);
 
 static Color colorTable[6] = {green, blue, white, yellow, red, orange};
 
-int CubeColor[6][LAYERS][LAYERS] =
-{
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}},
-    {{2, 2, 2}, {2, 2, 2}, {2, 2, 2}},
-    {{3, 3, 3}, {3, 3, 3}, {3, 3, 3}},
-    {{4, 4, 4}, {4, 4, 4}, {4, 4, 4}},
-    {{5, 5, 5}, {5, 5, 5}, {5, 5, 5}}
-};
-
-int CubeColor2[6][LAYERS][LAYERS] =
-{
-    {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-    {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}},
-    {{2, 2, 2}, {2, 2, 2}, {2, 2, 2}},
-    {{3, 3, 3}, {3, 3, 3}, {3, 3, 3}},
-    {{4, 4, 4}, {4, 4, 4}, {4, 4, 4}},
-    {{5, 5, 5}, {5, 5, 5}, {5, 5, 5}}
-};
+static int CubeColor[6][LAYERS][LAYERS];
+static int CubeColor2[6][LAYERS][LAYERS];
 
 RubiksCube::RubiksCube()
 {
