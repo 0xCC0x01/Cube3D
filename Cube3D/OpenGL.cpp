@@ -127,9 +127,10 @@ void COpenGL::zoomScene(short delta)
 
 void COpenGL::resetScene()
 {
-    angleX = 20.0f;
-    angleY = -30.0f;
+    angleX = 30.0f;
+    angleY = -35.0f;
     angleZ = 0.0f;
+    zoomSize = 1.0f;
 
     rubik.init();
     render(false);
