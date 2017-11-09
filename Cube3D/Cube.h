@@ -16,10 +16,10 @@ public:
 class Cube
 {
 private:
-    /* solid or wire cube */
-    bool solid;
     /* side length */
     float size;
+    /* solid or wire cube */
+    bool solid;
     /* colors of 6 faces */
     Color color[6];
     /* rotate direction */

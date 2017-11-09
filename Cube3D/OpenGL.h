@@ -17,13 +17,15 @@ class COpenGL
 private:
     CDC *hDC;
     HGLRC hRC;
+    /* Rubik's cube */
     RubiksCube rubik;
-
+    /* rotate angle of the whole cube */
     float angleX;
     float angleY;
     float angleZ;
+    /* zoom size of the cube */
     float zoomSize;
-
+    /* rotate actions */
     vector <ACTION> actions;
 
 public:

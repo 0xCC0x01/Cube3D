@@ -50,7 +50,7 @@ void Cube::display(bool selfRotate)
 
     glBegin(GL_QUADS);
 
-    //Front
+    /* Front */
     if (!selfRotate)
     {
         glColor3f(color[0].r, color[0].g, color[0].b);
@@ -60,7 +60,7 @@ void Cube::display(bool selfRotate)
     glVertex3f(size, size, size);
     glVertex3f(0, size, size);
 
-    //Back
+    /* Back */
     if (!selfRotate)
     {
         glColor3f(color[1].r, color[1].g, color[1].b);
@@ -70,7 +70,7 @@ void Cube::display(bool selfRotate)
     glVertex3f(size, size, 0);
     glVertex3f(0, size, 0);
 
-    //Up
+    /* Up */
     if (!selfRotate)
     {
         glColor3f(color[2].r, color[2].g, color[2].b);
@@ -80,7 +80,7 @@ void Cube::display(bool selfRotate)
     glVertex3f(size, size, size);
     glVertex3f(0, size, size);
 
-    //Down
+    /* Down */
     if (!selfRotate)
     {
         glColor3f(color[3].r, color[3].g, color[3].b);
@@ -90,7 +90,7 @@ void Cube::display(bool selfRotate)
     glVertex3f(size, 0, size);
     glVertex3f(0, 0, size);
 
-    //Left
+    /* Left */
     if (!selfRotate)
     {
         glColor3f(color[4].r, color[4].g, color[4].b);
@@ -100,7 +100,7 @@ void Cube::display(bool selfRotate)
     glVertex3f(0, size, size);
     glVertex3f(0, 0, size);
 
-    //Right
+    /* Right */
     if (!selfRotate)
     {
         glColor3f(color[5].r, color[5].g, color[5].b);

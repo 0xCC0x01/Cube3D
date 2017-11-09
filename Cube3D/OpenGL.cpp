@@ -54,7 +54,7 @@ bool COpenGL::setupPixelFormat(CDC *dc)
     {
         sizeof(PIXELFORMATDESCRIPTOR),
         1,
-        PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL| PFD_DOUBLEBUFFER,
+        PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
         PFD_TYPE_RGBA,
         24,
         0, 0, 0, 0, 0, 0, 0, 0,

@@ -19,6 +19,7 @@ typedef enum
 class RubiksCube
 {
 private:
+    /* rotate angle of one face */
     float rotAngle;
     Cube *cube[LAYERS][LAYERS][LAYERS];
 
@@ -27,7 +28,6 @@ public:
     ~RubiksCube();
 
     void init();
-
     void setColor();
 
     void display(bool selfRotate);
