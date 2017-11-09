@@ -9,10 +9,9 @@
 #define IDC_COMBO_THEME                 1002
 #define IDC_BUTTON_NEW                  1003
 #define IDC_BUTTON_SHUFFLE              1004
-#define IDC_BUTTON_RESTORE              1005
+#define IDC_BUTTON_UNDO                 1005
 #define IDC_BUTTON_SOLVE                1006
 #define IDC_EDIT_STEPS                  1007
-#define IDC_BUTTON_ACTION               1009
 
 // Next default values for new objects
 // 

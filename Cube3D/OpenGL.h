@@ -36,6 +36,7 @@ public:
     bool setupPixelFormat(CDC *dc);
 
     void setRot(int deltaX, int deltaY);
+    void setAction(int face, bool clockwise);
 
     void render(bool rotate = true);
     void resetScene();

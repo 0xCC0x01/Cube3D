@@ -88,14 +88,13 @@ BEGIN
     COMBOBOX        IDC_COMBO_N,390,6,66,12,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Color Theme",IDC_STATIC,339,27,41,8
     COMBOBOX        IDC_COMBO_THEME,390,25,66,12,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "NEW",IDC_BUTTON_NEW,348,54,46,15
-    PUSHBUTTON      "Shuffle",IDC_BUTTON_SHUFFLE,402,54,46,15,WS_DISABLED
-    PUSHBUTTON      "Solve",IDC_BUTTON_SOLVE,402,75,46,15,WS_DISABLED
-    EDITTEXT        IDC_EDIT_STEPS,339,113,117,61,ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL
-    PUSHBUTTON      "Action",IDC_BUTTON_ACTION,402,273,46,15,WS_DISABLED
-    PUSHBUTTON      "Restore",IDC_BUTTON_RESTORE,348,75,46,15,WS_DISABLED
-    GROUPBOX        "Operation",IDC_STATIC,339,43,117,53
-    LTEXT           "Steps",IDC_STATIC,339,104,19,8
+    PUSHBUTTON      "NEW",IDC_BUTTON_NEW,345,56,49,15
+    PUSHBUTTON      "Shuffle",IDC_BUTTON_SHUFFLE,400,56,49,15,WS_DISABLED
+    PUSHBUTTON      "Solve",IDC_BUTTON_SOLVE,400,76,49,15,WS_DISABLED
+    EDITTEXT        IDC_EDIT_STEPS,339,178,117,110,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+    PUSHBUTTON      "Undo",IDC_BUTTON_UNDO,345,76,49,15,WS_DISABLED
+    GROUPBOX        "Operation",IDC_STATIC,339,43,117,116
+    LTEXT           "Steps",IDC_STATIC,339,167,19,8
 END
 
 
@@ -121,13 +120,12 @@ BEGIN
     BEGIN
         BLOCK "080403a8"
         BEGIN
-            VALUE "CompanyName", "TODO: <公司名>"
-            VALUE "FileDescription", "TODO: <文件说明>"
+            VALUE "CompanyName", "0xCC"
+            VALUE "FileDescription", "Cube3D"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "Cube3D.exe"
-            VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
             VALUE "OriginalFilename", "Cube3D.exe"
-            VALUE "ProductName", "TODO: <产品名>"
+            VALUE "ProductName", "Cube3D"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END

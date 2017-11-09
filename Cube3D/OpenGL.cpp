@@ -31,6 +31,15 @@ void COpenGL::setRot(int deltaX, int deltaY)
     angleX += 2*(deltaY > 0 ? ROTATE_DELTA : -ROTATE_DELTA);
 }
 
+void COpenGL::setAction(int face, bool clockwise)
+{
+    ACTION act;
+    act.face = face;
+    act.dir = clockwise;
+
+    actions.push_back(act);
+}
+
 void COpenGL::init(int width, int height)
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);

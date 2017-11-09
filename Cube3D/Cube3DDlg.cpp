@@ -33,11 +33,13 @@ BEGIN_MESSAGE_MAP(CCube3DDlg, CDialog)
 	ON_WM_DESTROY()
 	ON_WM_TIMER()
 	ON_WM_MOUSEWHEEL()
-	ON_BN_CLICKED(IDC_BUTTON_NEW, &CCube3DDlg::OnClickedButtonNew)
-    ON_BN_CLICKED(IDC_BUTTON_SHUFFLE, &CCube3DDlg::OnClickedButtonShuffle)
-    ON_WM_RBUTTONDOWN()
+	ON_WM_RBUTTONDOWN()
     ON_WM_RBUTTONUP()
     ON_WM_MOUSEMOVE()
+	ON_BN_CLICKED(IDC_BUTTON_NEW, &CCube3DDlg::OnClickedButtonNew)
+    ON_BN_CLICKED(IDC_BUTTON_SHUFFLE, &CCube3DDlg::OnClickedButtonShuffle)
+	ON_BN_CLICKED(IDC_BUTTON_UNDO, &CCube3DDlg::OnClickedButtonUndo)
+	ON_BN_CLICKED(IDC_BUTTON_SOLVE, &CCube3DDlg::OnClickedButtonSolve)
 END_MESSAGE_MAP()
 
 
@@ -116,10 +118,10 @@ void CCube3DDlg::OnTimer(UINT_PTR nIDEvent)
 
 BOOL CCube3DDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
-	CRect rect;
+    CRect rect;
     GetDlgItem(IDC_DRAW)->GetWindowRect(rect);
 
-	if (rect.PtInRect(pt))
+    if (rect.PtInRect(pt))
     {
         opengl.zoomScene(zDelta);
     }
@@ -131,9 +133,8 @@ void CCube3DDlg::OnClickedButtonNew()
 {
     selfRotate = false;
     GetDlgItem(IDC_BUTTON_SHUFFLE)->EnableWindow(TRUE);
-    GetDlgItem(IDC_BUTTON_RESTORE)->EnableWindow(TRUE);
+    GetDlgItem(IDC_BUTTON_UNDO)->EnableWindow(TRUE);
     GetDlgItem(IDC_BUTTON_SOLVE)->EnableWindow(TRUE);
-    GetDlgItem(IDC_BUTTON_ACTION)->EnableWindow(TRUE);
 
     opengl.resetScene();
 }
@@ -145,46 +146,82 @@ void CCube3DDlg::OnClickedButtonShuffle()
 
 void CCube3DDlg::OnRButtonDown(UINT nFlags, CPoint point)
 {
-	CRect rect;
-	POINT pt = point;
-	GetDlgItem(IDC_DRAW)->GetWindowRect(rect);
-	ClientToScreen(&pt);
+    CRect rect;
+    POINT pt = point;
+    GetDlgItem(IDC_DRAW)->GetWindowRect(rect);
+    ClientToScreen(&pt);
 
-	if (rect.PtInRect(pt))
+    if (rect.PtInRect(pt))
     {
-		rButtonDown = true;
-		rButtonPos = point;
-	}
+        rButtonDown = true;
+        rButtonPos = point;
+    }
 	
     CDialog::OnRButtonDown(nFlags, point);
 }
 
 void CCube3DDlg::OnRButtonUp(UINT nFlags, CPoint point)
 {
-	if (rButtonDown)
-	{
-		rButtonDown = false;
-	}
+    if (rButtonDown)
+    {
+        rButtonDown = false;
+    }
 
     CDialog::OnRButtonUp(nFlags, point);
 }
 
 void CCube3DDlg::OnMouseMove(UINT nFlags, CPoint point)
 {
-	CRect rect;
-	POINT pt = point;
-	GetDlgItem(IDC_DRAW)->GetWindowRect(rect);
-	ClientToScreen(&pt);
+    CRect rect;
+    POINT pt = point;
+    GetDlgItem(IDC_DRAW)->GetWindowRect(rect);
+    ClientToScreen(&pt);
 
-	if (rect.PtInRect(pt) && rButtonDown)
-	{
-		opengl.setRot(point.x - rButtonPos.x, point.y - rButtonPos.y);
-		rButtonPos = point;
-	}
-	else
-	{
-		rButtonDown = false;
-	}
+    if (rect.PtInRect(pt) && rButtonDown)
+    {
+        opengl.setRot(point.x - rButtonPos.x, point.y - rButtonPos.y);
+        rButtonPos = point;
+    }
+    else
+    {
+        rButtonDown = false;
+    }
 
     CDialog::OnMouseMove(nFlags, point);
+}
+
+BOOL CCube3DDlg::PreTranslateMessage(MSG* pMsg)
+{
+    if (pMsg->message == WM_CHAR)
+    {
+        char key = pMsg->wParam;
+        char act1[] = {'F', 'B', 'U', 'D', 'L', 'R'};
+        char act2[] = {'f', 'b', 'u', 'd', 'l', 'r'};
+
+        for (int i = 0; i < 6; i++)
+        {
+            if (key == act1[i])
+            {
+                opengl.setAction(i, true);
+                break;
+            }
+            else if (key == act2[i])
+            {
+                opengl.setAction(i, false);
+                break;
+            }
+        }
+    }
+
+    return CDialog::PreTranslateMessage(pMsg);
+}
+
+void CCube3DDlg::OnClickedButtonUndo()
+{
+
+}
+
+void CCube3DDlg::OnClickedButtonSolve()
+{
+
 }
