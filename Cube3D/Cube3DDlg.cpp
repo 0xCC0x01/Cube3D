@@ -9,8 +9,12 @@
 #define new DEBUG_NEW
 #endif
 
+#define SHUFFLE_STEPS      (5)
+#define RENDER_TIMER       (1)
+#define RENDER_INTERVAL    (10)
 
-#define OPENGL_RENDER_TIMER    (1)
+static char act1[] = {'F', 'B', 'U', 'D', 'L', 'R'};
+static char act2[] = {'f', 'b', 'u', 'd', 'l', 'r'};
 
 // CCube3DDlg
 
@@ -27,19 +31,19 @@ void CCube3DDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CCube3DDlg, CDialog)
-	ON_WM_PAINT()
-	ON_WM_QUERYDRAGICON()
-	//}}AFX_MSG_MAP
-	ON_WM_DESTROY()
-	ON_WM_TIMER()
-	ON_WM_MOUSEWHEEL()
-	ON_WM_RBUTTONDOWN()
+    ON_WM_PAINT()
+    ON_WM_QUERYDRAGICON()
+    //}}AFX_MSG_MAP
+    ON_WM_DESTROY()
+    ON_WM_TIMER()
+    ON_WM_MOUSEWHEEL()
+    ON_WM_RBUTTONDOWN()
     ON_WM_RBUTTONUP()
     ON_WM_MOUSEMOVE()
-	ON_BN_CLICKED(IDC_BUTTON_NEW, &CCube3DDlg::OnClickedButtonNew)
+    ON_BN_CLICKED(IDC_BUTTON_NEW, &CCube3DDlg::OnClickedButtonNew)
     ON_BN_CLICKED(IDC_BUTTON_SHUFFLE, &CCube3DDlg::OnClickedButtonShuffle)
-	ON_BN_CLICKED(IDC_BUTTON_UNDO, &CCube3DDlg::OnClickedButtonUndo)
-	ON_BN_CLICKED(IDC_BUTTON_SOLVE, &CCube3DDlg::OnClickedButtonSolve)
+    ON_BN_CLICKED(IDC_BUTTON_UNDO, &CCube3DDlg::OnClickedButtonUndo)
+    ON_BN_CLICKED(IDC_BUTTON_SOLVE, &CCube3DDlg::OnClickedButtonSolve)
 END_MESSAGE_MAP()
 
 
@@ -52,13 +56,14 @@ BOOL CCube3DDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);
 	SetIcon(m_hIcon, FALSE);
 
-	// init
-	selfRotate = true;
-	rButtonDown = false;
-	InitOpenGL();
-	InitTimer();
+    // init
+    actIndex = 0;
+    selfRotate = true;
+    rButtonDown = false;
+    InitOpenGL();
+    InitTimer();
 
-	return TRUE;
+    return TRUE;
 }
 
 void CCube3DDlg::OnPaint()
@@ -91,7 +96,7 @@ HCURSOR CCube3DDlg::OnQueryDragIcon()
 
 void CCube3DDlg::InitTimer()
 {
-    SetTimer(OPENGL_RENDER_TIMER, 12, NULL);
+    SetTimer(RENDER_TIMER, RENDER_INTERVAL, NULL);
 }
 
 BOOL CCube3DDlg::InitOpenGL()
@@ -111,9 +116,40 @@ BOOL CCube3DDlg::InitOpenGL()
 
 void CCube3DDlg::OnTimer(UINT_PTR nIDEvent)
 {
-    opengl.render(selfRotate);
+    ACTION *act = ((actIndex < actions.size()) ? &actions[actIndex] : NULL);
+    if (opengl.render(selfRotate, act))
+    {
+        actIndex++;
+    }
 
     CDialog::OnTimer(nIDEvent);
+}
+
+void CCube3DDlg::AddAction(int face, bool clockwise, bool undo)
+{
+    ACTION act;
+    act.face = face;
+    act.dir = clockwise;
+    act.undo = undo;
+
+    actions.push_back(act);
+}
+
+void CCube3DDlg::UpdateSteps(int face, bool clockwise)
+{
+    CString steps = _T("");
+
+    for (size_t i = 0; i < actions.size(); i++)
+    {
+        if (!actions[i].undo)
+        {
+            steps += "[";
+            steps += (actions[i].dir ? act1[actions[i].face] : act2[actions[i].face]);
+            steps += "]  ";
+        }
+    }
+
+    GetDlgItem(IDC_EDIT_STEPS)->SetWindowText(steps);
 }
 
 BOOL CCube3DDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
@@ -129,21 +165,6 @@ BOOL CCube3DDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
     return CDialog::OnMouseWheel(nFlags, zDelta, pt);
 }
 
-void CCube3DDlg::OnClickedButtonNew()
-{
-    selfRotate = false;
-    GetDlgItem(IDC_BUTTON_SHUFFLE)->EnableWindow(TRUE);
-    GetDlgItem(IDC_BUTTON_UNDO)->EnableWindow(TRUE);
-    GetDlgItem(IDC_BUTTON_SOLVE)->EnableWindow(TRUE);
-
-    opengl.resetScene();
-}
-
-void CCube3DDlg::OnClickedButtonShuffle()
-{
-    opengl.shuffleScene();
-}
-
 void CCube3DDlg::OnRButtonDown(UINT nFlags, CPoint point)
 {
     CRect rect;
@@ -156,7 +177,7 @@ void CCube3DDlg::OnRButtonDown(UINT nFlags, CPoint point)
         rButtonDown = true;
         rButtonPos = point;
     }
-	
+
     CDialog::OnRButtonDown(nFlags, point);
 }
 
@@ -195,19 +216,18 @@ BOOL CCube3DDlg::PreTranslateMessage(MSG* pMsg)
     if (pMsg->message == WM_CHAR)
     {
         char key = pMsg->wParam;
-        char act1[] = {'F', 'B', 'U', 'D', 'L', 'R'};
-        char act2[] = {'f', 'b', 'u', 'd', 'l', 'r'};
-
         for (int i = 0; i < 6; i++)
         {
             if (key == act1[i])
             {
-                opengl.setAction(i, true);
+                AddAction(i, true);
+                UpdateSteps(i, true);
                 break;
             }
             else if (key == act2[i])
             {
-                opengl.setAction(i, false);
+                AddAction(i, false);
+                UpdateSteps(i, false);
                 break;
             }
         }
@@ -216,9 +236,48 @@ BOOL CCube3DDlg::PreTranslateMessage(MSG* pMsg)
     return CDialog::PreTranslateMessage(pMsg);
 }
 
+void CCube3DDlg::OnClickedButtonNew()
+{
+    selfRotate = false;
+    GetDlgItem(IDC_BUTTON_SHUFFLE)->EnableWindow(TRUE);
+    GetDlgItem(IDC_BUTTON_UNDO)->EnableWindow(TRUE);
+    GetDlgItem(IDC_BUTTON_SOLVE)->EnableWindow(TRUE);
+
+    actIndex = 0;
+    actions.clear();
+    GetDlgItem(IDC_EDIT_STEPS)->SetWindowText(_T(""));
+
+    opengl.resetScene();
+}
+
+void CCube3DDlg::OnClickedButtonShuffle()
+{
+    srand((unsigned) time(NULL));
+    for (int i = 0; i < SHUFFLE_STEPS; i++)
+    {
+        int face = rand() % 6;
+        bool dir = (rand() % 2) ? true : false;
+
+        AddAction(face, dir);
+        UpdateSteps(face, dir);
+    }
+}
+
 void CCube3DDlg::OnClickedButtonUndo()
 {
-
+    if (actIndex == actions.size())
+    {
+        for (int i = actions.size() - 1; i >= 0; i--)
+        {
+            if (!actions[i].undo)
+            {
+                actions[i].undo = true;
+                AddAction(actions[i].face, !actions[i].dir, true);
+                UpdateSteps(actions[i].face, !actions[i].dir);
+                return;
+            }
+        }
+    }
 }
 
 void CCube3DDlg::OnClickedButtonSolve()

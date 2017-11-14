@@ -214,7 +214,7 @@ void RubiksCube::rotateColor(int face, bool clockwise)
             {
                 for (int j = 0; j < LAYERS; j++)
                 {
-                    CubeColor[face][LAYERS - j - 1][i] = CubeColor2[face][i][j];
+                    CubeColor[face][LAYERS - 1 - j][i] = CubeColor2[face][i][j];
                 }
                 CubeColor[RIGHT][n][i] = CubeColor2[BACK][i][n];
                 CubeColor[FRONT][i][n] = CubeColor2[RIGHT][n][LAYERS - 1 - i];
@@ -243,7 +243,7 @@ void RubiksCube::rotateColor(int face, bool clockwise)
             {
                 for (int j = 0; j < LAYERS; j++)
                 {
-                    CubeColor[face][j][LAYERS - i - 1] = CubeColor2[face][i][j];
+                    CubeColor[face][j][LAYERS - 1 - i] = CubeColor2[face][i][j];
                 }
                 CubeColor[DOWN][n][i] = CubeColor2[BACK][n][LAYERS - 1 - i];
                 CubeColor[FRONT][n][i] = CubeColor2[DOWN][n][i];

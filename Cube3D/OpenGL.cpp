@@ -3,7 +3,6 @@
 
 #define ZOOM_DELTA        (0.15f)
 #define ROTATE_DELTA      (0.5f)
-#define SHUFFLE_STEPS     (5)
 
 COpenGL::COpenGL()
 {
@@ -29,15 +28,6 @@ void COpenGL::setRot(int deltaX, int deltaY)
 {
     angleY += 2*(deltaX > 0 ? ROTATE_DELTA : -ROTATE_DELTA);
     angleX += 2*(deltaY > 0 ? ROTATE_DELTA : -ROTATE_DELTA);
-}
-
-void COpenGL::setAction(int face, bool clockwise)
-{
-    ACTION act;
-    act.face = face;
-    act.dir = clockwise;
-
-    actions.push_back(act);
 }
 
 void COpenGL::init(int width, int height)
@@ -91,8 +81,9 @@ bool COpenGL::setupPixelFormat(CDC *dc)
     return true;
 }
 
-void COpenGL::render(bool selfRotate)
+bool COpenGL::render(bool selfRotate, ACTION *currAct)
 {
+    bool rotDone = false;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     glTranslatef(0, 0, -5);
@@ -102,13 +93,9 @@ void COpenGL::render(bool selfRotate)
     glRotatef(angleZ, 0, 0, 1);
     glScalef(zoomSize, zoomSize, zoomSize);
 
-    if (!actions.empty())
+    if (currAct)
     {
-        ACTION currAct = actions[0];
-        if (rubik.rotateFace(currAct.face, currAct.dir))
-        {
-            actions.erase(actions.begin());
-        }
+        rotDone = rubik.rotateFace(currAct->face, currAct->dir);
     }
     
     rubik.display(selfRotate);
@@ -120,6 +107,8 @@ void COpenGL::render(bool selfRotate)
         angleY += ROTATE_DELTA;
         angleZ += ROTATE_DELTA;
     }
+
+    return rotDone;
 }
 
 void COpenGL::zoomScene(short delta)
@@ -142,18 +131,5 @@ void COpenGL::resetScene()
     zoomSize = 1.0f;
 
     rubik.init();
-    render(false);
-}
-
-void COpenGL::shuffleScene()
-{
-    srand((unsigned) time(NULL));
-    for (int i = 0; i < SHUFFLE_STEPS; i++)
-    {
-        ACTION act;
-        act.face = rand() % 6;
-        act.dir = (rand() % 2) ? true : false;
-
-        actions.push_back(act);
-    }
+    render(false, NULL);
 }

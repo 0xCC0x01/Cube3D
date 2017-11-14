@@ -2,14 +2,13 @@
 #define _OPENGL_H_
 
 #include "RubiksCube.h"
-#include <vector>
-using std::vector;
 
 
 typedef struct
 {
-    int face;
+    bool undo;
     bool dir;
+    int face;
 }ACTION;
 
 class COpenGL
@@ -25,8 +24,6 @@ private:
     float angleZ;
     /* zoom size of the cube */
     float zoomSize;
-    /* rotate actions */
-    vector <ACTION> actions;
 
 public:
     COpenGL();
@@ -36,12 +33,10 @@ public:
     bool setupPixelFormat(CDC *dc);
 
     void setRot(int deltaX, int deltaY);
-    void setAction(int face, bool clockwise);
 
-    void render(bool rotate = true);
+    bool render(bool rotate = true, ACTION *act = NULL);
     void resetScene();
     void zoomScene(short delta);
-    void shuffleScene();
 };
 
 #endif /* _OPENGL_H_ */
