@@ -34,7 +34,7 @@ public:
 
     void setRot(int deltaX, int deltaY);
 
-    bool render(bool rotate = true, ACTION *act = NULL);
+    bool render(bool rotate = true, bool solid = true, ACTION *act = NULL);
     void resetScene();
     void zoomScene(short delta);
 };

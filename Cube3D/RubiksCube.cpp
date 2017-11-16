@@ -101,7 +101,7 @@ void RubiksCube::setColor()
     }
 }
 
-void RubiksCube::display(bool selfRotate)
+void RubiksCube::display(bool selfRotate, bool solid)
 {
     float size = 2.0f/LAYERS;
     
@@ -115,12 +115,12 @@ void RubiksCube::display(bool selfRotate)
                 float y = -1.0f + j*size;
                 float z = -1.0f + k*size;
 
-                glColor3f(1.0f*(i+1)/LAYERS, 1.0f*(j+1)/LAYERS, 1.0f*(k+1)/LAYERS);
+                glColor3f(1.0f*(i + 1)/LAYERS, 1.0f*(j + 1)/LAYERS, 1.0f*(k + 1)/LAYERS);
 
                 cube[i][j][k]->rotate(true);
                 glTranslatef(x, y, z);
 
-                cube[i][j][k]->display(selfRotate);
+                cube[i][j][k]->display(selfRotate, solid);
                 
                 glTranslatef(-x, -y, -z);
                 cube[i][j][k]->rotate(false);

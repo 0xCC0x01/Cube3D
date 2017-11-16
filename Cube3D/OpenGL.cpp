@@ -81,7 +81,7 @@ bool COpenGL::setupPixelFormat(CDC *dc)
     return true;
 }
 
-bool COpenGL::render(bool selfRotate, ACTION *currAct)
+bool COpenGL::render(bool selfRotate, bool solid, ACTION *currAct)
 {
     bool rotDone = false;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -98,7 +98,7 @@ bool COpenGL::render(bool selfRotate, ACTION *currAct)
         rotDone = rubik.rotateFace(currAct->face, currAct->dir);
     }
     
-    rubik.display(selfRotate);
+    rubik.display(selfRotate, solid);
     SwapBuffers(hDC->GetSafeHdc());
 
     if (selfRotate)

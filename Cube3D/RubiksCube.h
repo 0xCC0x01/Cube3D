@@ -30,7 +30,7 @@ public:
     void init();
     void setColor();
 
-    void display(bool selfRotate);
+    void display(bool selfRotate, bool solid);
     bool rotateFace(int face, bool clockwise);
     void rotateColor(int face, bool clockwise);
 };

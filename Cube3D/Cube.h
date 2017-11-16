@@ -18,8 +18,6 @@ class Cube
 private:
     /* side length */
     float size;
-    /* solid or wire cube */
-    bool solid;
     /* colors of 6 faces */
     Color color[6];
     /* rotate direction */
@@ -30,7 +28,7 @@ private:
     float rotZ;
 
 public:
-    Cube(float _size, bool _solid = true);
+    Cube(float _size);
 
     /* set color for one single face */
     void setColor(int face, Color c);
@@ -44,7 +42,7 @@ public:
     void setRotZ(float angle);
 
     /* display the cube */
-    void display(bool selfRotate);
+    void display(bool selfRotate, bool solid);
 
     /* rotate or derotate the cube */
     void rotate(bool derotate);

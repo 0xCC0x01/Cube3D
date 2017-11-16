@@ -11,7 +11,7 @@
 
 #define SHUFFLE_STEPS      (5)
 #define RENDER_TIMER       (1)
-#define RENDER_INTERVAL    (10)
+#define RENDER_INTERVAL    (15)
 
 static char act1[] = {'F', 'B', 'U', 'D', 'L', 'R'};
 static char act2[] = {'f', 'b', 'u', 'd', 'l', 'r'};
@@ -62,6 +62,12 @@ BOOL CCube3DDlg::OnInitDialog()
     rButtonDown = false;
     InitOpenGL();
     InitTimer();
+
+    CheckDlgButton(IDC_RADIO_SOLID, 1);
+    CString layers;
+    layers.Format(_T("%d Layers"), LAYERS);
+    ((CComboBox*)GetDlgItem(IDC_COMBO_N))->AddString(layers);
+	((CComboBox*)GetDlgItem(IDC_COMBO_N))->SetCurSel(0);
 
     return TRUE;
 }
@@ -117,7 +123,8 @@ BOOL CCube3DDlg::InitOpenGL()
 void CCube3DDlg::OnTimer(UINT_PTR nIDEvent)
 {
     ACTION *act = ((actIndex < actions.size()) ? &actions[actIndex] : NULL);
-    if (opengl.render(selfRotate, act))
+    bool solid = IsDlgButtonChecked(IDC_RADIO_SOLID);
+    if (opengl.render(selfRotate, solid, act))
     {
         actIndex++;
     }

@@ -1,13 +1,11 @@
 #include "stdafx.h"
 #include "Cube.h"
 
-Cube::Cube(float _size, bool _solid)
+Cube::Cube(float _size)
 {
     size = _size;
-    solid = _solid;
 
     dir = 1.0f;
-
     rotX = 0.0f;
     rotY = 0.0f;
     rotZ = 0.0f;
@@ -43,7 +41,7 @@ void Cube::setRotZ(float angle)
     rotZ = angle;
 }
 
-void Cube::display(bool selfRotate)
+void Cube::display(bool selfRotate, bool solid)
 {
     GLenum mode = solid ? GL_FILL : GL_LINE;
     glPolygonMode(GL_FRONT_AND_BACK, mode);

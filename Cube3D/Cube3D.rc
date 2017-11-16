@@ -84,17 +84,18 @@ CAPTION "Cube3D"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_DRAW,"Static",SS_BLACKFRAME,7,6,321,282
-    LTEXT           "Rubik's Cube",IDC_STATIC,339,8,40,8
-    COMBOBOX        IDC_COMBO_N,390,6,66,12,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Color Theme",IDC_STATIC,339,27,41,8
-    COMBOBOX        IDC_COMBO_THEME,390,25,66,12,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Operation",IDC_STATIC,339,43,117,116
-    PUSHBUTTON      "NEW",IDC_BUTTON_NEW,345,56,49,15
-    PUSHBUTTON      "Shuffle",IDC_BUTTON_SHUFFLE,400,56,49,15,WS_DISABLED
-    PUSHBUTTON      "Undo",IDC_BUTTON_UNDO,345,76,49,15,WS_DISABLED
-    PUSHBUTTON      "Solve",IDC_BUTTON_SOLVE,400,76,49,15,WS_DISABLED
+    LTEXT           "Rubik's Cube",IDC_STATIC,339,9,40,8
+    COMBOBOX        IDC_COMBO_N,400,6,49,12,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Solid Cube",IDC_RADIO_SOLID,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,339,24,52,10
+    CONTROL         "Wire Cube",IDC_RADIO_WIRE,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,400,24,48,10
+    GROUPBOX        "Operation",IDC_STATIC,338,39,118,122
+    PUSHBUTTON      "NEW",IDC_BUTTON_NEW,345,52,49,15
+    PUSHBUTTON      "Shuffle",IDC_BUTTON_SHUFFLE,400,52,49,15,WS_DISABLED
+    PUSHBUTTON      "Undo",IDC_BUTTON_UNDO,345,72,49,15,WS_DISABLED
+    PUSHBUTTON      "Solve",IDC_BUTTON_SOLVE,400,72,49,15,WS_DISABLED
+    LTEXT           "Mouse Wheel: Zoom in/out\r\nMouse Right Button: Rotate\r\nKey F/f: Rotate FRONT\r\nKey B/b: Rotate BACK\r\nKey U/u: Rotate UP\r\nKey D/d: Rotate DOWN\r\nKey L/l: Rotate LEFT\r\nKey R/r: Rotate RIGHT",IDC_STATIC,346,90,102,68
     LTEXT           "Steps",IDC_STATIC,339,167,19,8
-    EDITTEXT        IDC_EDIT_STEPS,339,178,117,110,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_STEPS,338,178,118,110,ES_MULTILINE | ES_READONLY | WS_VSCROLL | NOT WS_TABSTOP
 END
 
 
@@ -153,33 +154,6 @@ BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog Info
-//
-
-IDD_CUBE3D_DIALOG DLGINIT
-BEGIN
-    IDC_COMBO_N, 0x403, 2, 0
-0x0032, 
-    IDC_COMBO_N, 0x403, 2, 0
-0x0033, 
-    IDC_COMBO_N, 0x403, 2, 0
-0x0034, 
-    IDC_COMBO_N, 0x403, 2, 0
-0x0035, 
-    IDC_COMBO_THEME, 0x403, 2, 0
-0x0032, 
-    IDC_COMBO_THEME, 0x403, 2, 0
-0x0033, 
-    IDC_COMBO_THEME, 0x403, 2, 0
-0x0034, 
-    IDC_COMBO_THEME, 0x403, 2, 0
-0x0035, 
-    0
-END
 
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
