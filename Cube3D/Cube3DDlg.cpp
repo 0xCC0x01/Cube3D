@@ -9,7 +9,7 @@
 #define new DEBUG_NEW
 #endif
 
-#define SHUFFLE_STEPS      (5)
+#define SHUFFLE_STEPS      (10)
 #define RENDER_TIMER       (1)
 #define RENDER_INTERVAL    (15)
 
