@@ -11,22 +11,27 @@ using std::vector;
 class CCube3DDlg : public CDialog
 {
 public:
-	CCube3DDlg(CWnd* pParent = NULL);
+    CCube3DDlg(CWnd* pParent = NULL);
 
-	enum { IDD = IDD_CUBE3D_DIALOG };
+    enum { IDD = IDD_CUBE3D_DIALOG };
 
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
+    protected:
+    virtual void DoDataExchange(CDataExchange* pDX);
+    virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 
 protected:
-	HICON m_hIcon;
+    HICON m_hIcon;
 
-	virtual BOOL OnInitDialog();
-	afx_msg void OnPaint();
-	afx_msg HCURSOR OnQueryDragIcon();
-	DECLARE_MESSAGE_MAP()
+    virtual BOOL OnInitDialog();
+    afx_msg void OnPaint();
+    afx_msg HCURSOR OnQueryDragIcon();
+
+    virtual void OnOK() { return; }
+    virtual void OnCancel() { return; }
+    afx_msg void OnClose() { EndDialog(IDCANCEL); }
+
+    DECLARE_MESSAGE_MAP()
 
 private:
     /* selfrotate till NEW button clicked */
@@ -37,7 +42,7 @@ private:
     CPoint rButtonPos;
     /* COpenGL */
     COpenGL opengl;
-	/* current action index */
+    /* current action index */
     size_t actIndex;
     /* rotation actions */
     vector <ACTION> actions;

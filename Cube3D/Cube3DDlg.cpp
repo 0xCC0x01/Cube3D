@@ -22,12 +22,12 @@ static char act2[] = {'f', 'b', 'u', 'd', 'l', 'r'};
 CCube3DDlg::CCube3DDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CCube3DDlg::IDD, pParent)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+    m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 void CCube3DDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+    CDialog::DoDataExchange(pDX);
 }
 
 BEGIN_MESSAGE_MAP(CCube3DDlg, CDialog)
@@ -44,6 +44,7 @@ BEGIN_MESSAGE_MAP(CCube3DDlg, CDialog)
     ON_BN_CLICKED(IDC_BUTTON_SHUFFLE, &CCube3DDlg::OnClickedButtonShuffle)
     ON_BN_CLICKED(IDC_BUTTON_UNDO, &CCube3DDlg::OnClickedButtonUndo)
     ON_BN_CLICKED(IDC_BUTTON_SOLVE, &CCube3DDlg::OnClickedButtonSolve)
+    ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
@@ -51,10 +52,10 @@ END_MESSAGE_MAP()
 
 BOOL CCube3DDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+    CDialog::OnInitDialog();
 
-	SetIcon(m_hIcon, TRUE);
-	SetIcon(m_hIcon, FALSE);
+    SetIcon(m_hIcon, TRUE);
+    SetIcon(m_hIcon, FALSE);
 
     // init
     actIndex = 0;
@@ -67,37 +68,37 @@ BOOL CCube3DDlg::OnInitDialog()
     CString layers;
     layers.Format(_T("%d Layers"), LAYERS);
     ((CComboBox*)GetDlgItem(IDC_COMBO_N))->AddString(layers);
-	((CComboBox*)GetDlgItem(IDC_COMBO_N))->SetCurSel(0);
+    ((CComboBox*)GetDlgItem(IDC_COMBO_N))->SetCurSel(0);
 
     return TRUE;
 }
 
 void CCube3DDlg::OnPaint()
 {
-	if (IsIconic())
-	{
-		CPaintDC dc(this);
+    if (IsIconic())
+    {
+        CPaintDC dc(this);
 
-		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+        SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
+        int cxIcon = GetSystemMetrics(SM_CXICON);
+        int cyIcon = GetSystemMetrics(SM_CYICON);
+        CRect rect;
+        GetClientRect(&rect);
+        int x = (rect.Width() - cxIcon + 1) / 2;
+        int y = (rect.Height() - cyIcon + 1) / 2;
 
-		dc.DrawIcon(x, y, m_hIcon);
-	}
-	else
-	{
-		CDialog::OnPaint();
-	}
+        dc.DrawIcon(x, y, m_hIcon);
+    }
+    else
+    {
+        CDialog::OnPaint();
+    }
 }
 
 HCURSOR CCube3DDlg::OnQueryDragIcon()
 {
-	return static_cast<HCURSOR>(m_hIcon);
+    return static_cast<HCURSOR>(m_hIcon);
 }
 
 void CCube3DDlg::InitTimer()

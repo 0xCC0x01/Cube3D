@@ -131,5 +131,4 @@ void COpenGL::resetScene()
     zoomSize = 1.0f;
 
     rubik.init();
-    render(false, NULL);
 }
