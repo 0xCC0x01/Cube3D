@@ -13,7 +13,7 @@
 // CCube3DApp
 
 BEGIN_MESSAGE_MAP(CCube3DApp, CWinApp)
-	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
+	//ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
@@ -45,14 +45,6 @@ BOOL CCube3DApp::InitInstance()
 	CCube3DDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
-	{
-		// TODO:
-	}
-	else if (nResponse == IDCANCEL)
-	{
-		// TODO:
-	}
 
 	return FALSE;
 }
